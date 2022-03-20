@@ -1,12 +1,13 @@
 import { ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
+import { User } from "src/users/models/User";
 
-export class CreateUserDTO {
+export class CreateBlogPostDTO {
     @ApiProperty()
-    name: string;
+    title: string;
     
     @ApiProperty()
-    age: number;
-    
+    content: string;
+
     @ApiPropertyOptional()
-    phoneNumber: string;
+    userID: number;
 }

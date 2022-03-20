@@ -16,7 +16,11 @@ export class UsersService {
         new User(9, 'grigore', 23, '07**'),
     ];
 
-    private getBiggestUserID() {
+    getUsers(): User[] {
+        return this.users;
+    }
+
+    private getBiggestUserID(): number {
         let biggestID: number = 0;
 
         this.users.forEach(user => {
@@ -28,7 +32,7 @@ export class UsersService {
         return biggestID;
     }
 
-    getAllUsers() {
+    getAllUsers(): User[] {
         return [...this.users];
     }
 
