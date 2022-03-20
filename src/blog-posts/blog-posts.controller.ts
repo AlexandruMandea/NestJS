@@ -19,6 +19,6 @@ export class BlogPostsController {
         @Query('page number') page: number,
         @Query('limit') limit: number
         ) {
-    return this.blogPostsService.getBlogPostsOfAUserPaginated(userID, { page, limit });
-  }
+        return this.blogPostsService.getBlogPostsOfAUserPaginated(userID, { page, limit });
+    }
 }

@@ -36,6 +36,10 @@ export class BlogPostsService {
         new BlogPost(23, "3", "post 3 of user 5", 5),
     ];
 
+    getBlogPosts() {
+        return this.blogPosts;
+    }
+
     private getBiggestBlogPostID(): number {
         let biggestID: number = 0;
 
@@ -58,7 +62,6 @@ export class BlogPostsService {
     }
     
     getBlogPostsOfAUserPaginated(userID: number, options: { page: number, limit: number }): GetBlogPostDTO[] {
-        
         const user = this.usersService.getUsers()
         .find((user) => {
             return user._id === parseInt(userID.toString());
