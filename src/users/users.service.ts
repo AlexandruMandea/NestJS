@@ -1,9 +1,21 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDTO } from './dto/user.dto';
+import { forwardRef, Inject, Injectable, Scope } from '@nestjs/common';
+import { BlogPostsService } from 'src/blog-posts/blog-posts.service';
+import { GetBlogPostAndCommentsDTO } from 'src/blog-posts/dto/get-blog-post-and-comments.dto';
+import { CommentsService } from 'src/comments/comments.service';
+import { CreateUserDTO } from './dto/create-user.dto';
+import { GetUserAndContentDTO } from './dto/get-user-and-content.dto';
 import { User } from './models/User';
 
 @Injectable()
 export class UsersService {
+    constructor(
+        @Inject(forwardRef(() => CommentsService))
+        private readonly commentsService: CommentsService,
+
+        @Inject(forwardRef(() => BlogPostsService))
+        private readonly blogPostsService: BlogPostsService
+        ) {}
+
     private users: User[] = [
         new User(1, 'alex.m', 22, '0758'),
         new User(2, 'andrei.m', 24, '0756'),
@@ -71,5 +83,32 @@ export class UsersService {
         let index = this.users.indexOf(user);
 
         this.users.splice(index, 1);
+    }
+
+    getUserAndContent(userID: number) {
+        let userAndContentDTO: GetUserAndContentDTO = new GetUserAndContentDTO;
+
+        let user: User =  this.users.find((user) => {
+            return user._id === parseInt(userID.toString());
+        });
+
+        let userBlogPosts: GetBlogPostAndCommentsDTO[] = this.blogPostsService.getBlogPosts().filter((blogPost) => {
+            return blogPost.userID === parseInt(userID.toString());
+        }).map((blogPost) => {
+            let blogPostAndCommentsDTO = new GetBlogPostAndCommentsDTO();
+
+            blogPostAndCommentsDTO.blogPost = blogPost;
+
+            blogPostAndCommentsDTO.comments = this.commentsService.getComments().filter((comment) => {
+                return comment.postID === blogPost._id;
+            });
+
+            return blogPostAndCommentsDTO;
+        });
+
+        userAndContentDTO.user = user;
+        userAndContentDTO.blogPosts = userBlogPosts;
+
+        return userAndContentDTO;
     }
 }

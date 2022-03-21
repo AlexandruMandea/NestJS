@@ -7,12 +7,12 @@ import { CommentsService } from './comments.service';
 export class CommentsController {
     constructor(private readonly usersService: CommentsService) {}
 
-    @Get('/user/:postID')
-    getCommentsOfABlogPost(
-        @Param('postID') postID: number,
+    @Get('/user/:userID')
+    getCommentsOfAUserPaginated(
+        @Param('userID') userID: number,
         @Query('page number') page: number,
         @Query('limit') limit: number
         ) {
-        return this.usersService.getCommentsOfABlogPostPaginated(postID, page, limit);
+        return this.usersService.getCommentsOfAUserPaginated(userID, page, limit);
     }
 }

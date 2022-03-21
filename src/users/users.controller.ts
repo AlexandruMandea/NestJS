@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateUserDTO } from './dto/user.dto';
+import { CreateUserDTO } from './dto/create-user.dto';
 import { User } from './models/User';
 import { UsersService } from './users.service';
 
@@ -32,5 +32,10 @@ export class UsersController {
     @Delete(':id')
     deleteUser(@Param('id') id: number) {
         return this.usersService.deleteUser(id);
+    }
+
+    @Get('user-and-content/:userID')
+    getUserAndContent(@Param('userID') userID: number) {
+        return this.usersService.getUserAndContent(userID);
     }
 }

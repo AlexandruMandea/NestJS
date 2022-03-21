@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable} from '@nestjs/common';
+import { BadRequestException, forwardRef, Inject, Injectable, Scope} from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { resourceLimits } from 'worker_threads';
 import { CreateBlogPostDTO } from './dto/blog-post.dto';
@@ -7,7 +7,9 @@ import { BlogPost } from './models/BlogPost';
 
 @Injectable()
 export class BlogPostsService {
-    constructor (private readonly usersService: UsersService) {}
+    constructor (
+        @Inject(forwardRef(() => UsersService))
+        private readonly usersService: UsersService) {}
 
     private blogPosts: BlogPost[] = [
         new BlogPost(0, "dummy post", "dummy content", 0),

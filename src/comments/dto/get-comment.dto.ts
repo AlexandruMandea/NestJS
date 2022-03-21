@@ -5,12 +5,10 @@ export class GetCommentDTO {
     _id: number;
     content: string;
     user: User;
-    blogPost: BlogPost;
 
-    constructor(_id: number, content: string, user: User, blogPost: BlogPost) {
+    constructor(_id: number, content: string, user: User) {
         this._id = _id;
         this.content = content;
         this.user = user;
-        this.blogPost = blogPost;
     }
 }
