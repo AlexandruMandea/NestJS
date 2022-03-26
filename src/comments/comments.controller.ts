@@ -5,7 +5,7 @@ import { CommentsService } from './comments.service';
 @ApiTags('comments')
 @Controller('comments')
 export class CommentsController {
-    constructor(private readonly usersService: CommentsService) {}
+    constructor(private readonly commentsService: CommentsService) {}
 
     @Get('/user/:userID')
     getCommentsOfAUserPaginated(
@@ -13,6 +13,6 @@ export class CommentsController {
         @Query('page number') page: number,
         @Query('limit') limit: number
         ) {
-        return this.usersService.getCommentsOfAUserPaginated(userID, page, limit);
+        return this.commentsService.getCommentsOfAUserPaginated(userID, page, limit);
     }
 }
